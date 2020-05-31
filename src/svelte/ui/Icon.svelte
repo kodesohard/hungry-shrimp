@@ -5,7 +5,7 @@
 </script>
 
 <svg {style} class="icon {cssClass}" on:click>
-    <use xlink:href="../../icons/icons-sprite.svg#{iconName}" />
+    <use xlink:href="../../icons-sprite.svg#{iconName}" />
 </svg>
 
 <style>
