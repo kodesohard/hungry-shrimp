@@ -21,7 +21,7 @@
 <div class="container">
 	<h1>Hungry Shrimp</h1>
 
-	<main style="background-image: url('../../{$options.gameMap}.jpg');">
+	<main style="background-image: url('./{$options.gameMap}.jpg');">
 		<GamePlay bind:stat />
 	</main>
 
@@ -51,7 +51,7 @@
     	border: solid black 1px;
     	position: relative;
     	margin: 20px auto;
-		background-image: url("../../giantMonster.jpg");
+		background-image: url("./giantMonster.jpg");
 		background-size: cover;
 	}
 

@@ -11,7 +11,7 @@
 
     afterUpdate(() => {
         if ($options.music) {
-            audioSource.src = `../../${$options.music}`
+            audioSource.src = `./${$options.music}`
             audioSource.type = `audio/${$options.music.split('.')[1]}`
             audio.load()
             audio.play()
