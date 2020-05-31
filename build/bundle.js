@@ -10,10 +10,10 @@ var app = (function () {
     'use strict'
 
     function noop() {}
-    const identity = x => x
+    const identity = (x) => x
     function add_location(element, file, line, column, char) {
         element.__svelte_meta = {
-            loc: { file, line, column, char }
+            loc: { file, line, column, char },
         }
     }
     function run(fn) {
@@ -53,11 +53,11 @@ var app = (function () {
 
     const is_client = typeof window !== 'undefined'
     let now = is_client ? () => window.performance.now() : () => Date.now()
-    let raf = is_client ? cb => requestAnimationFrame(cb) : noop
+    let raf = is_client ? (cb) => requestAnimationFrame(cb) : noop
 
     const tasks = new Set()
     function run_tasks(now) {
-        tasks.forEach(task => {
+        tasks.forEach((task) => {
             if (!task.c(now)) {
                 tasks.delete(task)
                 task.f()
@@ -73,12 +73,12 @@ var app = (function () {
         let task
         if (tasks.size === 0) raf(run_tasks)
         return {
-            promise: new Promise(fulfill => {
+            promise: new Promise((fulfill) => {
                 tasks.add((task = { c: callback, f: fulfill }))
             }),
             abort() {
                 tasks.delete(task)
-            }
+            },
         }
     }
 
@@ -173,8 +173,8 @@ var app = (function () {
         const previous = (node.style.animation || '').split(', ')
         const next = previous.filter(
             name
-                ? anim => anim.indexOf(name) < 0 // remove specific animation
-                : anim => anim.indexOf('__svelte') === -1 // remove all Svelte animations
+                ? (anim) => anim.indexOf(name) < 0 // remove specific animation
+                : (anim) => anim.indexOf('__svelte') === -1 // remove all Svelte animations
         )
         const deleted = previous.length - next.length
         if (deleted) {
@@ -186,7 +186,7 @@ var app = (function () {
     function clear_rules() {
         raf(() => {
             if (active) return
-            active_docs.forEach(doc => {
+            active_docs.forEach((doc) => {
                 const stylesheet = doc.__svelte_stylesheet
                 let i = stylesheet.cssRules.length
                 while (i--) stylesheet.deleteRule(i)
@@ -213,7 +213,7 @@ var app = (function () {
     function bubble(component, event) {
         const callbacks = component.$$.callbacks[event.type]
         if (callbacks) {
-            callbacks.slice().forEach(fn => fn(event))
+            callbacks.slice().forEach((fn) => fn(event))
         }
     }
 
@@ -300,7 +300,7 @@ var app = (function () {
         outros = {
             r: 0,
             c: [],
-            p: outros // parent group
+            p: outros, // parent group
         }
     }
     function check_outros() {
@@ -349,14 +349,14 @@ var app = (function () {
                 duration,
                 start: program.start,
                 end: program.start + duration,
-                group: program.group
+                group: program.group,
             }
         }
         function go(b) {
             const { delay = 0, duration = 300, easing = identity, tick = noop, css } = config || null_transition
             const program = {
                 start: now() + delay,
-                b
+                b,
             }
             if (!b) {
                 // @ts-ignore todo: improve typings
@@ -375,7 +375,7 @@ var app = (function () {
                 if (b) tick(0, 1)
                 running_program = init(program, duration)
                 add_render_callback(() => dispatch(node, b, 'start'))
-                loop(now => {
+                loop((now) => {
                     if (pending_program && now > pending_program.start) {
                         running_program = init(pending_program, duration)
                         pending_program = null
@@ -433,7 +433,7 @@ var app = (function () {
             end() {
                 clear_animation()
                 running_program = pending_program = null
-            }
+            },
         }
     }
 
@@ -505,7 +505,7 @@ var app = (function () {
             context: new Map(parent_component ? parent_component.$$.context : []),
             // everything else
             callbacks: blank_object(),
-            dirty
+            dirty,
         })
         let ready = false
         $$.ctx = instance
@@ -668,7 +668,7 @@ var app = (function () {
             },
             d: function destroy(detaching) {
                 if (detaching) detach_dev(div)
-            }
+            },
         }
 
         dispatch_dev('SvelteRegisterBlock', {
@@ -676,7 +676,7 @@ var app = (function () {
             id: create_each_block.name,
             type: 'each',
             source: '(7:0) {#each shrimpPositions as position, i}',
-            ctx
+            ctx,
         })
 
         return block
@@ -742,7 +742,7 @@ var app = (function () {
             d: function destroy(detaching) {
                 destroy_each(each_blocks, detaching)
                 if (detaching) detach_dev(each_1_anchor)
-            }
+            },
         }
 
         dispatch_dev('SvelteRegisterBlock', {
@@ -750,7 +750,7 @@ var app = (function () {
             id: create_fragment.name,
             type: 'component',
             source: '',
-            ctx
+            ctx,
         })
 
         return block
@@ -760,7 +760,7 @@ var app = (function () {
         let { shrimpPositions } = $$props
         const writable_props = ['shrimpPositions']
 
-        Object.keys($$props).forEach(key => {
+        Object.keys($$props).forEach((key) => {
             if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$')
                 console.warn(`<Shrimp> was created with unknown prop '${key}'`)
         })
@@ -768,13 +768,13 @@ var app = (function () {
         let { $$slots = {}, $$scope } = $$props
         validate_slots('Shrimp', $$slots, [])
 
-        $$self.$set = $$props => {
+        $$self.$set = ($$props) => {
             if ('shrimpPositions' in $$props) $$invalidate(0, (shrimpPositions = $$props.shrimpPositions))
         }
 
         $$self.$capture_state = () => ({ shrimpPositions })
 
-        $$self.$inject_state = $$props => {
+        $$self.$inject_state = ($$props) => {
             if ('shrimpPositions' in $$props) $$invalidate(0, (shrimpPositions = $$props.shrimpPositions))
         }
 
@@ -794,7 +794,7 @@ var app = (function () {
                 component: this,
                 tagName: 'Shrimp',
                 options,
-                id: create_fragment.name
+                id: create_fragment.name,
             })
 
             const { ctx } = this.$$
@@ -879,7 +879,7 @@ var app = (function () {
             d: function destroy(detaching) {
                 if (detaching) detach_dev(svg)
                 dispose()
-            }
+            },
         }
 
         dispatch_dev('SvelteRegisterBlock', {
@@ -887,7 +887,7 @@ var app = (function () {
             id: create_fragment$1.name,
             type: 'component',
             source: '',
-            ctx
+            ctx,
         })
 
         return block
@@ -899,7 +899,7 @@ var app = (function () {
         let { style = '' } = $$props
         const writable_props = ['iconName', 'cssClass', 'style']
 
-        Object.keys($$props).forEach(key => {
+        Object.keys($$props).forEach((key) => {
             if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$')
                 console.warn(`<Icon> was created with unknown prop '${key}'`)
         })
@@ -911,7 +911,7 @@ var app = (function () {
             bubble($$self, event)
         }
 
-        $$self.$set = $$props => {
+        $$self.$set = ($$props) => {
             if ('iconName' in $$props) $$invalidate(0, (iconName = $$props.iconName))
             if ('cssClass' in $$props) $$invalidate(1, (cssClass = $$props.cssClass))
             if ('style' in $$props) $$invalidate(2, (style = $$props.style))
@@ -919,7 +919,7 @@ var app = (function () {
 
         $$self.$capture_state = () => ({ iconName, cssClass, style })
 
-        $$self.$inject_state = $$props => {
+        $$self.$inject_state = ($$props) => {
             if ('iconName' in $$props) $$invalidate(0, (iconName = $$props.iconName))
             if ('cssClass' in $$props) $$invalidate(1, (cssClass = $$props.cssClass))
             if ('style' in $$props) $$invalidate(2, (style = $$props.style))
@@ -941,7 +941,7 @@ var app = (function () {
                 component: this,
                 tagName: 'Icon',
                 options,
-                id: create_fragment$1.name
+                id: create_fragment$1.name,
             })
 
             const { ctx } = this.$$
@@ -1006,9 +1006,9 @@ var app = (function () {
 
         const icon = new Icon({
             props: {
-                iconName: /*feedMap*/ ctx[1][/*feed*/ ctx[2].score]
+                iconName: /*feedMap*/ ctx[1][/*feed*/ ctx[2].score],
             },
-            $$inline: true
+            $$inline: true,
         })
 
         const block = {
@@ -1052,7 +1052,7 @@ var app = (function () {
             d: function destroy(detaching) {
                 if (detaching) detach_dev(div)
                 destroy_component(icon)
-            }
+            },
         }
 
         dispatch_dev('SvelteRegisterBlock', {
@@ -1060,7 +1060,7 @@ var app = (function () {
             id: create_each_block$1.name,
             type: 'each',
             source: '(17:0) {#each feedItems as feed}',
-            ctx
+            ctx,
         })
 
         return block
@@ -1077,7 +1077,7 @@ var app = (function () {
             each_blocks[i] = create_each_block$1(get_each_context$1(ctx, each_value, i))
         }
 
-        const out = i =>
+        const out = (i) =>
             transition_out(each_blocks[i], 1, 1, () => {
                 each_blocks[i] = null
             })
@@ -1153,7 +1153,7 @@ var app = (function () {
             d: function destroy(detaching) {
                 destroy_each(each_blocks, detaching)
                 if (detaching) detach_dev(each_1_anchor)
-            }
+            },
         }
 
         dispatch_dev('SvelteRegisterBlock', {
@@ -1161,7 +1161,7 @@ var app = (function () {
             id: create_fragment$2.name,
             type: 'component',
             source: '',
-            ctx
+            ctx,
         })
 
         return block
@@ -1176,12 +1176,12 @@ var app = (function () {
             1: 'shrimp-1',
             2: 'gold-shrimp-1',
             3: 'shrimp-pair',
-            4: 'lobster'
+            4: 'lobster',
         }
 
         const writable_props = ['feedItems']
 
-        Object.keys($$props).forEach(key => {
+        Object.keys($$props).forEach((key) => {
             if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$')
                 console.warn(`<FeedItems> was created with unknown prop '${key}'`)
         })
@@ -1189,13 +1189,13 @@ var app = (function () {
         let { $$slots = {}, $$scope } = $$props
         validate_slots('FeedItems', $$slots, [])
 
-        $$self.$set = $$props => {
+        $$self.$set = ($$props) => {
             if ('feedItems' in $$props) $$invalidate(0, (feedItems = $$props.feedItems))
         }
 
         $$self.$capture_state = () => ({ Icon, feedItems, feedMap })
 
-        $$self.$inject_state = $$props => {
+        $$self.$inject_state = ($$props) => {
             if ('feedItems' in $$props) $$invalidate(0, (feedItems = $$props.feedItems))
             if ('feedMap' in $$props) $$invalidate(1, (feedMap = $$props.feedMap))
         }
@@ -1216,7 +1216,7 @@ var app = (function () {
                 component: this,
                 tagName: 'FeedItems',
                 options,
-                id: create_fragment$2.name
+                id: create_fragment$2.name,
             })
 
             const { ctx } = this.$$
@@ -1296,7 +1296,7 @@ var app = (function () {
     const options = writable({
         advanced: false,
         gameMap: '3HeadedMonster',
-        music: ''
+        music: '',
     })
 
     function cubicOut(t) {
@@ -1310,7 +1310,7 @@ var app = (function () {
             delay,
             duration,
             easing,
-            css: t => `opacity: ${t * o}`
+            css: (t) => `opacity: ${t * o}`,
         }
     }
     function fly(node, { delay = 0, duration = 400, easing = cubicOut, x = 0, y = 0, opacity = 0 }) {
@@ -1324,7 +1324,7 @@ var app = (function () {
             easing,
             css: (t, u) => `
 			transform: ${transform} translate(${(1 - t) * x}px, ${(1 - t) * y}px);
-			opacity: ${target_opacity - od * u}`
+			opacity: ${target_opacity - od * u}`,
         }
     }
 
@@ -1333,7 +1333,7 @@ var app = (function () {
         collision,
         getNewFeedItems,
         isReverse,
-        getKeyCodeDirection
+        getKeyCodeDirection,
     }
 
     function moveShrimp(direction, head) {
@@ -1365,24 +1365,24 @@ var app = (function () {
             case 2:
                 return Array(Math.ceil(Math.random() * times)).fill({
                     score: Math.ceil(Math.random() * 3),
-                    ..._generateNewPosition()
+                    ..._generateNewPosition(),
                 })
             case 3:
                 return Array(Math.ceil(Math.random() * times)).fill({
                     score: Math.ceil(Math.random() * 4),
-                    ..._generateNewPosition()
+                    ..._generateNewPosition(),
                 })
             case 4:
                 return Array(Math.ceil(Math.random() * times)).fill({
                     score: -1,
                     life: -1,
-                    ..._generateNewPosition()
+                    ..._generateNewPosition(),
                 })
             case 5:
                 return Array(Math.ceil(Math.random() * times)).fill({
                     score: 0,
                     life: 1,
-                    ..._generateNewPosition()
+                    ..._generateNewPosition(),
                 })
         }
     }
@@ -1390,7 +1390,7 @@ var app = (function () {
     function _generateNewPosition() {
         return {
             x: Math.floor(Math.random() * 20) * 50,
-            y: Math.floor(Math.random() * 14) * 50
+            y: Math.floor(Math.random() * 14) * 50,
         }
     }
 
@@ -1441,14 +1441,14 @@ var app = (function () {
 
         const shrimp = new Shrimp({
             props: {
-                shrimpPositions: /*shrimpPositions*/ ctx[3]
+                shrimpPositions: /*shrimpPositions*/ ctx[3],
             },
-            $$inline: true
+            $$inline: true,
         })
 
         const feeditems = new FeedItems({
             props: { feedItems: /*feedItems*/ ctx[4] },
-            $$inline: true
+            $$inline: true,
         })
 
         const block = {
@@ -1486,7 +1486,7 @@ var app = (function () {
                 destroy_component(shrimp, detaching)
                 if (detaching) detach_dev(t)
                 destroy_component(feeditems, detaching)
-            }
+            },
         }
 
         dispatch_dev('SvelteRegisterBlock', {
@@ -1494,7 +1494,7 @@ var app = (function () {
             id: create_if_block_2.name,
             type: 'if',
             source: '(136:4) {#if gameRunning}',
-            ctx
+            ctx,
         })
 
         return block
@@ -1536,7 +1536,7 @@ var app = (function () {
             d: function destroy(detaching) {
                 if (detaching) detach_dev(p)
                 if (detaching && p_transition) p_transition.end()
-            }
+            },
         }
 
         dispatch_dev('SvelteRegisterBlock', {
@@ -1544,7 +1544,7 @@ var app = (function () {
             id: create_if_block_1.name,
             type: 'if',
             source: '(147:27) ',
-            ctx
+            ctx,
         })
 
         return block
@@ -1570,7 +1570,7 @@ var app = (function () {
 
         const icon = new Icon({
             props: { cssClass: 'restart', iconName: 'restart' },
-            $$inline: true
+            $$inline: true,
         })
 
         icon.$on('click', /*startGame*/ ctx[5])
@@ -1642,7 +1642,7 @@ var app = (function () {
                 if (detaching) detach_dev(div)
                 destroy_component(icon)
                 if (detaching && div_transition) div_transition.end()
-            }
+            },
         }
 
         dispatch_dev('SvelteRegisterBlock', {
@@ -1650,7 +1650,7 @@ var app = (function () {
             id: create_if_block.name,
             type: 'if',
             source: '(140:4) {#if gameOver}',
-            ctx
+            ctx,
         })
 
         return block
@@ -1783,7 +1783,7 @@ var app = (function () {
                 }
 
                 dispose()
-            }
+            },
         }
 
         dispatch_dev('SvelteRegisterBlock', {
@@ -1791,7 +1791,7 @@ var app = (function () {
             id: create_fragment$3.name,
             type: 'component',
             source: '',
-            ctx
+            ctx,
         })
 
         return block
@@ -1800,14 +1800,14 @@ var app = (function () {
     function instance$3($$self, $$props, $$invalidate) {
         let $options
         validate_store(options, 'options')
-        component_subscribe($$self, options, $$value => $$invalidate(10, ($options = $$value)))
+        component_subscribe($$self, options, ($$value) => $$invalidate(10, ($options = $$value)))
         let gameOver = false
         let gameRunning = false
         let intervalId
         let shrimpPositions = [
             { x: 50, y: 350 },
             { x: 25, y: 350 },
-            { x: 0, y: 350 }
+            { x: 0, y: 350 },
         ]
         let direction = ''
         let feedItems
@@ -1889,7 +1889,7 @@ var app = (function () {
                 head.x >= 970 ||
                 head.y < 0 ||
                 head.y >= 690 ||
-                shrimpPositions.slice(1).find(s => GamePlayUtils_2(s, head)) ||
+                shrimpPositions.slice(1).find((s) => GamePlayUtils_2(s, head)) ||
                 stat.lives === 0
             ) {
                 set_store_value(options, ($options.music = 'theEnd.mp3'), $options)
@@ -1922,7 +1922,7 @@ var app = (function () {
                 (shrimpPositions = [
                     { x: 50, y: 350 },
                     { x: 25, y: 350 },
-                    { x: 0, y: 350 }
+                    { x: 0, y: 350 },
                 ])
             )
             $$invalidate(4, (feedItems = GamePlayUtils_3(1, 1)))
@@ -1930,7 +1930,7 @@ var app = (function () {
 
         const writable_props = ['stat']
 
-        Object.keys($$props).forEach(key => {
+        Object.keys($$props).forEach((key) => {
             if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$')
                 console_1.warn(`<GamePlay> was created with unknown prop '${key}'`)
         })
@@ -1938,7 +1938,7 @@ var app = (function () {
         let { $$slots = {}, $$scope } = $$props
         validate_slots('GamePlay', $$slots, [])
 
-        $$self.$set = $$props => {
+        $$self.$set = ($$props) => {
             if ('stat' in $$props) $$invalidate(0, (stat = $$props.stat))
         }
 
@@ -1967,10 +1967,10 @@ var app = (function () {
             onKeyDown,
             initialState,
             interval,
-            $options
+            $options,
         })
 
-        $$self.$inject_state = $$props => {
+        $$self.$inject_state = ($$props) => {
             if ('gameOver' in $$props) $$invalidate(1, (gameOver = $$props.gameOver))
             if ('gameRunning' in $$props) $$invalidate(2, (gameRunning = $$props.gameRunning))
             if ('intervalId' in $$props) intervalId = $$props.intervalId
@@ -2005,7 +2005,7 @@ var app = (function () {
                 component: this,
                 tagName: 'GamePlay',
                 options,
-                id: create_fragment$3.name
+                id: create_fragment$3.name,
             })
 
             const { ctx } = this.$$
@@ -2060,9 +2060,9 @@ var app = (function () {
         const icon = new Icon({
             props: {
                 style: 'margin-top: 15px;',
-                iconName: /*soundIcon*/ ctx[3]
+                iconName: /*soundIcon*/ ctx[3],
             },
-            $$inline: true
+            $$inline: true,
         })
 
         icon.$on('click', /*click_handler_4*/ ctx[11])
@@ -2156,7 +2156,7 @@ var app = (function () {
                     listen_dev(button0, 'click', /*click_handler*/ ctx[5], false, false, false),
                     listen_dev(button1, 'click', /*click_handler_1*/ ctx[6], false, false, false),
                     listen_dev(button2, 'click', /*click_handler_2*/ ctx[7], false, false, false),
-                    listen_dev(input, 'click', /*click_handler_3*/ ctx[8], false, false, false)
+                    listen_dev(input, 'click', /*click_handler_3*/ ctx[8], false, false, false),
                 ]
             },
             p: function update(ctx, [dirty]) {
@@ -2206,7 +2206,7 @@ var app = (function () {
                 if (detaching) detach_dev(t10)
                 destroy_component(icon, detaching)
                 run_all(dispose)
-            }
+            },
         }
 
         dispatch_dev('SvelteRegisterBlock', {
@@ -2214,7 +2214,7 @@ var app = (function () {
             id: create_fragment$4.name,
             type: 'component',
             source: '',
-            ctx
+            ctx,
         })
 
         return block
@@ -2223,7 +2223,7 @@ var app = (function () {
     function instance$4($$self, $$props, $$invalidate) {
         let $options
         validate_store(options, 'options')
-        component_subscribe($$self, options, $$value => $$invalidate(4, ($options = $$value)))
+        component_subscribe($$self, options, ($$value) => $$invalidate(4, ($options = $$value)))
         let audio
         let audioSource
         let muted = false
@@ -2239,7 +2239,7 @@ var app = (function () {
 
         const writable_props = []
 
-        Object.keys($$props).forEach(key => {
+        Object.keys($$props).forEach((key) => {
             if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$')
                 console.warn(`<Options> was created with unknown prop '${key}'`)
         })
@@ -2255,7 +2255,7 @@ var app = (function () {
                 options,
                 ($options = {
                     ...$options,
-                    advanced: !$options.advanced
+                    advanced: !$options.advanced,
                 })
             )
 
@@ -2281,10 +2281,10 @@ var app = (function () {
             audioSource,
             muted,
             soundIcon,
-            $options
+            $options,
         })
 
-        $$self.$inject_state = $$props => {
+        $$self.$inject_state = ($$props) => {
             if ('audio' in $$props) $$invalidate(0, (audio = $$props.audio))
             if ('audioSource' in $$props) $$invalidate(1, (audioSource = $$props.audioSource))
             if ('muted' in $$props) $$invalidate(2, (muted = $$props.muted))
@@ -2315,7 +2315,7 @@ var app = (function () {
             click_handler_3,
             source_binding,
             audio_1_binding,
-            click_handler_4
+            click_handler_4,
         ]
     }
 
@@ -2328,7 +2328,7 @@ var app = (function () {
                 component: this,
                 tagName: 'Options',
                 options,
-                id: create_fragment$4.name
+                id: create_fragment$4.name,
             })
         }
     }
@@ -2348,7 +2348,7 @@ var app = (function () {
 
         const icon = new Icon({
             props: { iconName: 'gamepad' },
-            $$inline: true
+            $$inline: true,
         })
 
         const block = {
@@ -2371,7 +2371,7 @@ var app = (function () {
             },
             d: function destroy(detaching) {
                 destroy_component(icon, detaching)
-            }
+            },
         }
 
         dispatch_dev('SvelteRegisterBlock', {
@@ -2379,7 +2379,7 @@ var app = (function () {
             id: create_each_block$2.name,
             type: 'each',
             source: '(31:2) {#each Array(stat.lives) as i}',
-            ctx
+            ctx,
         })
 
         return block
@@ -2422,7 +2422,7 @@ var app = (function () {
             each_blocks[i] = create_each_block$2(get_each_context$2(ctx, each_value, i))
         }
 
-        const out = i =>
+        const out = (i) =>
             transition_out(each_blocks[i], 1, 1, () => {
                 each_blocks[i] = null
             })
@@ -2566,7 +2566,7 @@ var app = (function () {
                 destroy_component(gameplay)
                 destroy_each(each_blocks, detaching)
                 destroy_component(options_1)
-            }
+            },
         }
 
         dispatch_dev('SvelteRegisterBlock', {
@@ -2574,7 +2574,7 @@ var app = (function () {
             id: create_fragment$5.name,
             type: 'component',
             source: '',
-            ctx
+            ctx,
         })
 
         return block
@@ -2583,11 +2583,11 @@ var app = (function () {
     function instance$5($$self, $$props, $$invalidate) {
         let $options
         validate_store(options, 'options')
-        component_subscribe($$self, options, $$value => $$invalidate(1, ($options = $$value)))
+        component_subscribe($$self, options, ($$value) => $$invalidate(1, ($options = $$value)))
         let stat = { score: 0, lives: 3 }
         const writable_props = []
 
-        Object.keys($$props).forEach(key => {
+        Object.keys($$props).forEach((key) => {
             if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$')
                 console.warn(`<App> was created with unknown prop '${key}'`)
         })
@@ -2606,10 +2606,10 @@ var app = (function () {
             options,
             Icon,
             stat,
-            $options
+            $options,
         })
 
-        $$self.$inject_state = $$props => {
+        $$self.$inject_state = ($$props) => {
             if ('stat' in $$props) $$invalidate(0, (stat = $$props.stat))
         }
 
@@ -2629,13 +2629,13 @@ var app = (function () {
                 component: this,
                 tagName: 'App',
                 options,
-                id: create_fragment$5.name
+                id: create_fragment$5.name,
             })
         }
     }
 
     const app = new App({
-        target: document.body
+        target: document.body,
     })
 
     return app
