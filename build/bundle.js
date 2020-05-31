@@ -834,6 +834,7 @@ var app = (function () {
                 svg = svg_element('svg')
                 use = svg_element('use')
                 xlink_attr(use, 'xlink:href', (use_xlink_href_value = '../../icons-sprite.svg#' + /*iconName*/ ctx[0]))
+
                 add_location(use, file$1, 7, 4, 150)
                 attr_dev(svg, 'style', /*style*/ ctx[2])
                 attr_dev(svg, 'class', (svg_class_value = 'icon ' + /*cssClass*/ ctx[1] + ' svelte-z92nov'))
