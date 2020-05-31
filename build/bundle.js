@@ -836,7 +836,7 @@ var app = (function () {
                 xlink_attr(
                     use,
                     'xlink:href',
-                    (use_xlink_href_value = '../../icons/icons-sprite.svg#' + /*iconName*/ ctx[0])
+                    (use_xlink_href_value = './icons/icons-sprite.svg#' + /*iconName*/ ctx[0])
                 )
                 add_location(use, file$1, 7, 4, 150)
                 attr_dev(svg, 'style', /*style*/ ctx[2])
