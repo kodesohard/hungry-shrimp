@@ -1,19 +1,19 @@
-.container.svelte-udrrh3 {
+.container.svelte-u1h5bc {
     height: 100%;
     overflow: hidden;
     text-align: center;
 }
-main.svelte-udrrh3 {
+main.svelte-u1h5bc {
     display: inline-block;
     width: 1000px;
     height: 700px;
     border: solid black 1px;
     position: relative;
     margin: 20px auto;
-    background-image: url('../../images/giantMonster.jpg');
+    background-image: url('../../giantMonster.jpg');
     background-size: cover;
 }
-.control-panel.svelte-udrrh3 {
+.control-panel.svelte-u1h5bc {
     display: inline-block;
     padding: 25px;
     vertical-align: top;
@@ -23,7 +23,7 @@ main.svelte-udrrh3 {
     width: 200px;
     height: 650px;
 }
-h1.svelte-udrrh3 {
+h1.svelte-u1h5bc {
     color: #ff3e00;
     text-align: center;
     text-transform: uppercase;
@@ -31,13 +31,13 @@ h1.svelte-udrrh3 {
     font-weight: 100;
     margin: auto;
 }
-h2.svelte-udrrh3 {
+h2.svelte-u1h5bc {
     text-align: center;
     font-size: 1.5em;
     font-weight: 100;
 }
 @media (min-width: 640px) {
-    main.svelte-udrrh3 {
+    main.svelte-u1h5bc {
         max-width: none;
     }
 }

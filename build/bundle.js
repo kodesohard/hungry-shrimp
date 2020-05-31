@@ -833,11 +833,7 @@ var app = (function () {
             c: function create() {
                 svg = svg_element('svg')
                 use = svg_element('use')
-                xlink_attr(
-                    use,
-                    'xlink:href',
-                    (use_xlink_href_value = '../../icons/icons-sprite.svg#' + /*iconName*/ ctx[0])
-                )
+                xlink_attr(use, 'xlink:href', (use_xlink_href_value = '../../icons-sprite.svg#' + /*iconName*/ ctx[0]))
                 add_location(use, file$1, 7, 4, 150)
                 attr_dev(svg, 'style', /*style*/ ctx[2])
                 attr_dev(svg, 'class', (svg_class_value = 'icon ' + /*cssClass*/ ctx[1] + ' svelte-z92nov'))
@@ -857,8 +853,7 @@ var app = (function () {
             p: function update(ctx, [dirty]) {
                 if (
                     dirty & /*iconName*/ 1 &&
-                    use_xlink_href_value !==
-                        (use_xlink_href_value = '../../icons/icons-sprite.svg#' + /*iconName*/ ctx[0])
+                    use_xlink_href_value !== (use_xlink_href_value = '../../icons-sprite.svg#' + /*iconName*/ ctx[0])
                 ) {
                     xlink_attr(use, 'xlink:href', use_xlink_href_value)
                 }
@@ -2094,32 +2089,32 @@ var app = (function () {
                 create_component(icon.$$.fragment)
                 attr_dev(button0, 'class', 'svelte-zlvs8e')
                 toggle_class(button0, 'active', /*$options*/ ctx[4].gameMap === '3HeadedMonster')
-                add_location(button0, file$4, 22, 4, 534)
+                add_location(button0, file$4, 22, 4, 528)
                 attr_dev(button1, 'class', 'svelte-zlvs8e')
                 toggle_class(button1, 'active', /*$options*/ ctx[4].gameMap === 'corals')
-                add_location(button1, file$4, 23, 4, 672)
+                add_location(button1, file$4, 23, 4, 666)
                 attr_dev(button2, 'class', 'svelte-zlvs8e')
                 toggle_class(button2, 'active', /*$options*/ ctx[4].gameMap === 'giantMonster')
-                add_location(button2, file$4, 24, 4, 795)
+                add_location(button2, file$4, 24, 4, 789)
                 attr_dev(div0, 'class', 'tab svelte-zlvs8e')
-                add_location(div0, file$4, 21, 0, 512)
+                add_location(div0, file$4, 21, 0, 506)
                 attr_dev(input, 'type', 'checkbox')
                 attr_dev(input, 'class', 'svelte-zlvs8e')
-                add_location(input, file$4, 30, 8, 989)
+                add_location(input, file$4, 30, 8, 983)
                 attr_dev(span, 'class', 'slider svelte-zlvs8e')
-                add_location(span, file$4, 31, 8, 1097)
+                add_location(span, file$4, 31, 8, 1091)
                 attr_dev(label0, 'class', 'switch svelte-zlvs8e')
-                add_location(label0, file$4, 29, 4, 958)
-                add_location(label1, file$4, 33, 4, 1143)
+                add_location(label0, file$4, 29, 4, 952)
+                add_location(label1, file$4, 33, 4, 1137)
                 attr_dev(div1, 'class', 'toggle svelte-zlvs8e')
-                add_location(div1, file$4, 28, 0, 933)
+                add_location(div1, file$4, 28, 0, 927)
                 if (source.src !== (source_src_value = '')) attr_dev(source, 'src', source_src_value)
                 attr_dev(source, 'type', '')
-                add_location(source, file$4, 37, 4, 1260)
+                add_location(source, file$4, 37, 4, 1254)
                 audio_1.muted = /*muted*/ ctx[2]
                 audio_1.autoplay = true
                 audio_1.loop = true
-                add_location(audio_1, file$4, 36, 0, 1208)
+                add_location(audio_1, file$4, 36, 0, 1202)
             },
             l: function claim(nodes) {
                 throw new Error(
@@ -2230,7 +2225,7 @@ var app = (function () {
 
         afterUpdate(() => {
             if ($options.music) {
-                $$invalidate(1, (audioSource.src = `../../audio/${$options.music}`), audioSource)
+                $$invalidate(1, (audioSource.src = `../../${$options.music}`), audioSource)
                 $$invalidate(1, (audioSource.type = `audio/${$options.music.split('.')[1]}`), audioSource)
                 audio.load()
                 audio.play()
@@ -2451,19 +2446,19 @@ var app = (function () {
 
                 t6 = space()
                 create_component(options_1.$$.fragment)
-                attr_dev(h1, 'class', 'svelte-udrrh3')
+                attr_dev(h1, 'class', 'svelte-u1h5bc')
                 add_location(h1, file$5, 21, 1, 365)
-                set_style(main, 'background-image', "url('../../images/" + /*$options*/ ctx[1].gameMap + ".jpg')")
-                attr_dev(main, 'class', 'svelte-udrrh3')
+                set_style(main, 'background-image', "url('../../" + /*$options*/ ctx[1].gameMap + ".jpg')")
+                attr_dev(main, 'class', 'svelte-u1h5bc')
                 add_location(main, file$5, 23, 1, 390)
-                attr_dev(h2, 'class', 'svelte-udrrh3')
-                add_location(h2, file$5, 28, 2, 533)
+                attr_dev(h2, 'class', 'svelte-u1h5bc')
+                add_location(h2, file$5, 28, 2, 526)
                 set_style(div0, 'display', 'block')
                 set_style(div0, 'margin', '6px')
-                add_location(div0, file$5, 29, 2, 563)
-                attr_dev(div1, 'class', 'control-panel svelte-udrrh3')
-                add_location(div1, file$5, 27, 1, 503)
-                attr_dev(div2, 'class', 'container svelte-udrrh3')
+                add_location(div0, file$5, 29, 2, 556)
+                attr_dev(div1, 'class', 'control-panel svelte-u1h5bc')
+                add_location(div1, file$5, 27, 1, 496)
+                attr_dev(div2, 'class', 'container svelte-u1h5bc')
                 add_location(div2, file$5, 20, 0, 340)
             },
             l: function claim(nodes) {
@@ -2505,7 +2500,7 @@ var app = (function () {
                 gameplay.$set(gameplay_changes)
 
                 if (!current || dirty & /*$options*/ 2) {
-                    set_style(main, 'background-image', "url('../../images/" + /*$options*/ ctx[1].gameMap + ".jpg')")
+                    set_style(main, 'background-image', "url('../../" + /*$options*/ ctx[1].gameMap + ".jpg')")
                 }
 
                 if ((!current || dirty & /*stat*/ 1) && t4_value !== (t4_value = /*stat*/ ctx[0].score + ''))
