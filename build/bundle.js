@@ -1461,7 +1461,7 @@ var app = (function () {
 
     const file$3 = 'src/svelte/components/GamePlay.svelte'
 
-    // (173:4) {#if gameRunning}
+    // (174:4) {#if gameRunning}
     function create_if_block_2(ctx) {
         let t
         let current
@@ -1522,14 +1522,14 @@ var app = (function () {
             block,
             id: create_if_block_2.name,
             type: 'if',
-            source: '(173:4) {#if gameRunning}',
+            source: '(174:4) {#if gameRunning}',
             ctx,
         })
 
         return block
     }
 
-    // (184:27)
+    // (185:27)
     function create_if_block_1(ctx) {
         let p
         let p_transition
@@ -1540,7 +1540,7 @@ var app = (function () {
                 p = element('p')
                 p.textContent = 'Press any arrow key to start playing.'
                 attr_dev(p, 'class', 'svelte-okwzuz')
-                add_location(p, file$3, 184, 8, 5392)
+                add_location(p, file$3, 185, 8, 5423)
             },
             m: function mount(target, anchor) {
                 insert_dev(target, p, anchor)
@@ -1572,14 +1572,14 @@ var app = (function () {
             block,
             id: create_if_block_1.name,
             type: 'if',
-            source: '(184:27) ',
+            source: '(185:27) ',
             ctx,
         })
 
         return block
     }
 
-    // (177:4) {#if gameOver}
+    // (178:4) {#if gameOver}
     function create_if_block(ctx) {
         let div
         let p0
@@ -1620,12 +1620,12 @@ var app = (function () {
                 t7 = space()
                 create_component(icon.$$.fragment)
                 attr_dev(p0, 'class', 'svelte-okwzuz')
-                add_location(p0, file$3, 178, 12, 5160)
+                add_location(p0, file$3, 179, 12, 5191)
                 attr_dev(p1, 'class', 'svelte-okwzuz')
-                add_location(p1, file$3, 179, 12, 5196)
+                add_location(p1, file$3, 180, 12, 5227)
                 attr_dev(p2, 'class', 'svelte-okwzuz')
-                add_location(p2, file$3, 180, 12, 5235)
-                add_location(div, file$3, 177, 8, 5096)
+                add_location(p2, file$3, 181, 12, 5266)
+                add_location(div, file$3, 178, 8, 5127)
             },
             m: function mount(target, anchor) {
                 insert_dev(target, div, anchor)
@@ -1678,7 +1678,7 @@ var app = (function () {
             block,
             id: create_if_block.name,
             type: 'if',
-            source: '(177:4) {#if gameOver}',
+            source: '(178:4) {#if gameOver}',
             ctx,
         })
 
@@ -1720,11 +1720,11 @@ var app = (function () {
                 audio_1 = element('audio')
                 source = element('source')
                 attr_dev(div, 'class', 'game-play')
-                add_location(div, file$3, 171, 0, 4935)
+                add_location(div, file$3, 172, 0, 4966)
                 if (source.src !== (source_src_value = '')) attr_dev(source, 'src', source_src_value)
                 attr_dev(source, 'type', '')
-                add_location(source, file$3, 188, 4, 5500)
-                add_location(audio_1, file$3, 187, 0, 5470)
+                add_location(source, file$3, 189, 4, 5531)
+                add_location(audio_1, file$3, 188, 0, 5501)
             },
             l: function claim(nodes) {
                 throw new Error(
@@ -1980,6 +1980,7 @@ var app = (function () {
         }
 
         function onKeyDown(event) {
+            event.preventDefault()
             const newDirection = GamePlayUtils_5(event.keyCode)
 
             if (newDirection && !GamePlayUtils_4(direction, newDirection)) {
@@ -2708,21 +2709,21 @@ var app = (function () {
 
                 t6 = space()
                 create_component(options_1.$$.fragment)
-                attr_dev(h1, 'class', 'svelte-x330xu')
+                attr_dev(h1, 'class', 'svelte-cgicvz')
                 add_location(h1, file$5, 15, 2, 289)
-                attr_dev(div0, 'class', 'title svelte-x330xu')
+                attr_dev(div0, 'class', 'title svelte-cgicvz')
                 add_location(div0, file$5, 14, 1, 267)
                 set_style(main, 'background-image', "url('./" + /*$options*/ ctx[1].gameMap + ".jpg')")
-                attr_dev(main, 'class', 'svelte-x330xu')
+                attr_dev(main, 'class', 'svelte-cgicvz')
                 add_location(main, file$5, 18, 1, 322)
-                attr_dev(h2, 'class', 'svelte-x330xu')
+                attr_dev(h2, 'class', 'svelte-cgicvz')
                 add_location(h2, file$5, 23, 2, 454)
                 set_style(div1, 'display', 'block')
                 set_style(div1, 'margin', '6px')
                 add_location(div1, file$5, 24, 2, 484)
-                attr_dev(div2, 'class', 'control-panel svelte-x330xu')
+                attr_dev(div2, 'class', 'control-panel svelte-cgicvz')
                 add_location(div2, file$5, 22, 1, 424)
-                attr_dev(div3, 'class', 'container svelte-x330xu')
+                attr_dev(div3, 'class', 'container svelte-cgicvz')
                 add_location(div3, file$5, 13, 0, 242)
             },
             l: function claim(nodes) {

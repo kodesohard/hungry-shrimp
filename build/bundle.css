@@ -1,16 +1,15 @@
-.container.svelte-x330xu {
+.container.svelte-cgicvz {
     height: 100%;
-    overflow: hidden;
     text-align: center;
 }
-.title.svelte-x330xu {
+.title.svelte-cgicvz {
     width: 600px;
     margin: auto;
     text-align: center;
     border: 1px solid;
     background-color: black;
 }
-main.svelte-x330xu {
+main.svelte-cgicvz {
     display: inline-block;
     width: 1000px;
     height: 700px;
@@ -20,7 +19,7 @@ main.svelte-x330xu {
     background-image: url('./blue.jpg');
     background-size: cover;
 }
-.control-panel.svelte-x330xu {
+.control-panel.svelte-cgicvz {
     display: inline-block;
     padding: 25px;
     vertical-align: top;
@@ -30,7 +29,7 @@ main.svelte-x330xu {
     width: 200px;
     height: 650px;
 }
-h1.svelte-x330xu {
+h1.svelte-cgicvz {
     font-family: Bangers;
     color: white;
     text-align: center;
@@ -38,14 +37,14 @@ h1.svelte-x330xu {
     font-weight: 100;
     margin: auto;
 }
-h2.svelte-x330xu {
+h2.svelte-cgicvz {
     font-family: Bangers;
     text-align: center;
     font-size: 1.5em;
     font-weight: 100;
 }
 @media (min-width: 640px) {
-    main.svelte-x330xu {
+    main.svelte-cgicvz {
         max-width: none;
     }
 }
