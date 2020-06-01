@@ -3,13 +3,15 @@
     import FeedItems from './FeedItems.svelte'
     import { options } from '../stores.js'
     import { fade, fly } from 'svelte/transition'
+    import { afterUpdate } from 'svelte'
     import Icon from '../ui/Icon.svelte'
     import { 
         moveShrimp,
         collision,
         getNewFeedItems,
         isReverse,
-        getKeyCodeDirection
+        getKeyCodeDirection,
+        removeDuplicatePositions
     } from '../../utils/GamePlayUtils'
     
     
@@ -24,10 +26,24 @@
         ]
     let direction = ''
     let feedItems
+    let audio
+    let audioSource
+    let sound = ''
     
     export let stat
 
-    $: interval = $options.advanced ? 80 : 180  
+    $: interval = $options.advanced ? 80 : 180
+    $: color = stat.lives < 3 ? '#f78a86' : '#86bbf7'
+    
+    afterUpdate(() => {
+        if (sound) {
+            audioSource.src = `./${sound}`
+            audioSource.type = `audio/${sound.split('.')[1]}`
+            audio.load()
+            audio.play()
+            sound = ''
+        }
+    })
 
     function startGame() {
         initialState()
@@ -41,17 +57,17 @@
             const newHead = moveShrimp(direction, curHead)
             shrimpPositions = [newHead, ...shrimpPositions]
             if (isGameOver()) {
+                $options.music = 'theEnd.mp3'
                 return
             }
             
             feedItems.forEach((feed, idx) => {
                 if (collision(newHead, feed)) {
-                    console.log('FEEDITEMS111', JSON.stringify(feedItems))
-                    const consumedFeed = feedItems.splice(idx, 1, ...generateNewFeedItems())[0]
-                    feedItems = feedItems
-                    console.log('FEEDITEMS', JSON.stringify(feedItems))
-                    stat.score = stat.score + (consumedFeed.score || 0) + 15
-                    stat.lives = stat.lives + (consumedFeed.life || 0)
+                    const consumedFeed = feedItems.splice(idx, 1)[0]
+                    feedItems = updateFeedItems()
+                    
+                    setSound(consumedFeed)
+                    updateStat(consumedFeed)
                     if (stat.score > 15 && $options.music !== 'terror.mp3') {
                         $options.music = 'terror.mp3'
                     }
@@ -62,13 +78,33 @@
         }, interval)
     }
 
-    function generateNewFeedItems() {
+    function updateStat(consumedFeed) {
+        stat.score = stat.score + (consumedFeed.score || 0)
+        stat.lives = stat.lives + (consumedFeed.life || 0)
+    }
+
+    function setSound(consumedFeed) {
+        if (consumedFeed.score > 0) {
+            sound = 'pointsAdded.wav'
+        } else if (consumedFeed.life > 0) {
+            sound = 'healthAdded.wav'
+        } else if (consumedFeed.life < 0) {
+            sound = 'healthLost.wav'
+        }
+    }
+
+    function updateFeedItems() {
+
+        if (feedItems.filter(f => f.score !== -1).length > 8) {
+            return []
+        }
+
         let newFeeds = []
         const availableStats = feedItems.reduce((acc, item) => {
             acc.score += (item.score || 0)
-            acc.lives += (item.life || 0)
+            acc.healers += item.life === 1 ? 1 : 0
             return acc
-        }, { score: 0, lives: 0 })
+        }, { score: 0, healers: 0 })
 
         if (stat.score <= 5) {
             newFeeds = getNewFeedItems(1, 1)
@@ -77,15 +113,15 @@
         } else if (stat.score > 10) {
             newFeeds = getNewFeedItems(3, 3)
             if (stat.lives >= 2) {
+                // add poison mushroom
                 newFeeds.push(getNewFeedItems(1, 4)[0])
             } 
-            if (stat.lives < 3) {
+            if (stat.lives < 3 && availableStats.healers < (3 - stat.lives)) {
+                // add healer
                 newFeeds.push(getNewFeedItems(1, 5)[0])
             }
         }
-
-        console.log('AVStat', stat, JSON.stringify(availableStats), newFeeds)
-        return newFeeds
+        return removeDuplicatePositions([...feedItems, ...newFeeds])
     }
 
     function isGameOver() {
@@ -93,13 +129,13 @@
 
         if (
             head.x < 0 ||
-            head.x >= 970 ||
+            head.x > 975 ||
             head.y < 0 ||
-            head.y >= 690 ||
+            head.y > 675 ||
             shrimpPositions.slice(1).find(s => collision(s, head)) ||
             stat.lives === 0
         ) {
-            $options.music = 'theEnd.mp3'
+            sound = 'dead.wav'
             gameOver = true
             return true
         }
@@ -120,6 +156,7 @@
         gameRunning = true
         gameOver = false
         $options.music = 'theBeginning.mp3'
+        sound = ''
 
         stat = { score: 0, lives: 3 }
         direction = 'right' 
@@ -134,24 +171,28 @@
 
 <div class="game-play">
     {#if gameRunning}
-        <Shrimp {shrimpPositions} />
+        <Shrimp {color} {shrimpPositions} />
         <FeedItems {feedItems}/>
     {/if}
     {#if gameOver}
         <div transition:fly="{{ y: 200, duration: 2000 }}">
-            <p>Game Over!</p>
+            <p>Game Over Loser!</p>
             <p>Score: {stat.score}</p>
             <p>Lives: {stat.lives}</p>
             <Icon cssClass="restart" iconName="restart" on:click={startGame}/>
         </div>
     {:else if !gameRunning}
-        <p transition:fade>Press any arrow key to begin playing.</p>
+        <p transition:fade>Press any arrow key to start playing.</p>
     {/if}
 </div>
+<audio bind:this={audio}>
+    <source bind:this={audioSource} src="" type="">
+</audio>
 <svelte:window on:keydown={onKeyDown} />
 
 <style>
     p {
+        font-family: bangers;
 		text-align: center;
 		font-size: 4em;
         font-weight: 200;

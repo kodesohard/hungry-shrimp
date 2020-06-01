@@ -3,7 +3,8 @@ module.exports = {
     collision,
     getNewFeedItems,
     isReverse,
-    getKeyCodeDirection
+    getKeyCodeDirection,
+    removeDuplicatePositions
 }
 
 function moveShrimp(direction, head) {
@@ -55,6 +56,16 @@ function getNewFeedItems(times, level) {
                 ..._generateNewPosition()
             })
     }
+}
+
+function removeDuplicatePositions(positions) {
+    const unique = new Set()
+
+    return positions.filter(p => {
+        const duplicate = unique.has(`${p.x}:${p.y}`)
+        unique.add(`${p.x}:${p.y}`)
+        return !duplicate
+    })
 }
 
 function _generateNewPosition() {

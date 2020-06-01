@@ -8,18 +8,13 @@
 		score: 0,
 		lives: 3
 	}
-
-  // add better graphics
-  // add portals
-  // deploy it
-  // score animation
-  // arcade fonts
-
   
 </script>
 	
 <div class="container">
-	<h1>Hungry Shrimp</h1>
+	<div class="title">
+		<h1>Hungry Shrimp</h1>
+	</div>
 
 	<main style="background-image: url('./{$options.gameMap}.jpg');">
 		<GamePlay bind:stat />
@@ -44,6 +39,14 @@
 		text-align: center;
 	}
 
+	.title {
+		width: 30%;
+		margin: auto;
+		text-align: center;
+		border: 1px solid; 
+		background-color: black;
+	}
+
 	main {
 		display: inline-block;
 		width: 1000px;
@@ -51,7 +54,7 @@
     	border: solid black 1px;
     	position: relative;
     	margin: 20px auto;
-		background-image: url("./giantMonster.jpg");
+		background-image: url("./blue.jpg");
 		background-size: cover;
 	}
 
@@ -67,15 +70,16 @@
 	}
 
 	h1 {
-		color: #ff3e00;
+		font-family: Bangers;
+		color: white;
 		text-align: center;
-		text-transform: uppercase;
-		font-size: 4em;
+		font-size: 6em;
 		font-weight: 100;
 		margin: auto;
 	}
 
 	h2 {
+		font-family: Bangers;
 		text-align: center;
 		font-size: 1.5em;
 		font-weight: 100;

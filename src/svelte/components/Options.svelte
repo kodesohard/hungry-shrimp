@@ -20,9 +20,9 @@
 </script>
 
 <div class="tab">
-    <button class:active="{$options.gameMap === '3HeadedMonster'}" on:click={() => $options.gameMap = '3HeadedMonster'}>Koro Sea</button>
-    <button class:active="{$options.gameMap === 'corals'}" on:click={() => $options.gameMap = 'corals'}>Coral Sea</button>
-    <button class:active="{$options.gameMap === 'giantMonster'}" on:click={() => $options.gameMap = 'giantMonster'}>Red Sea</button>
+    <button class:active="{$options.gameMap === 'blue'}" on:click={() => $options.gameMap = 'blue'}>Koro Sea</button>
+    <button class:active="{$options.gameMap === 'corals'}" on:click={() => $options.gameMap = 'corals'}>iQuatic Sea</button>
+    <button class:active="{$options.gameMap === 'jelly'}" on:click={() => $options.gameMap = 'jelly'}>Red Sea</button>
 </div>
 
 
@@ -43,6 +43,7 @@
 <style>
     .toggle {
         display: block;
+        font-family: bangers;
     }
 
     .switch {
@@ -107,6 +108,7 @@
     }
 
     .tab button {
+        font-family: bangers;
         display: block;
         background-color: inherit;
         color: black;

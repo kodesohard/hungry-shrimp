@@ -13,7 +13,7 @@
         width: 28px;
         height: 28px;
         cursor: pointer;
-        z-index: 3;
+        z-index: 4;
     }
 
     .restart {
