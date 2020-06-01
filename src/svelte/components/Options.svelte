@@ -40,7 +40,23 @@
 
 <Icon style="margin-top: 15px;" iconName={soundIcon} on:click={() => muted = !muted}/>
 
+<div class="icon-legend">
+    <Icon iconName="shrimp-1" /><p>+1 point</p>
+    <Icon iconName="gold-shrimp-1" /><p>+2 points</p>
+    <Icon iconName="shrimp-pair" /><p>+3 points</p>
+    <Icon iconName="lobster" /><p>+4 points</p>
+    <Icon iconName="mushroom" /><p>-1 life</p>
+    <Icon iconName="gamepad" /><p>+1 life</p>
+</div>
+
 <style>
+    .icon-legend {
+        font-family: bangers;
+        margin-top: 30px;
+    }
+    .icon-legend > p {
+        margin-top: 0;
+    }
     .toggle {
         display: block;
         font-family: bangers;
