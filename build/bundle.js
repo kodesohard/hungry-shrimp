@@ -2188,10 +2188,23 @@ var app = (function () {
         let source
         let source_src_value
         let t10
+        let t11
+        let div2
+        let p0
+        let t13
+        let p1
+        let t15
+        let p2
+        let t17
+        let p3
+        let t19
+        let p4
+        let t21
+        let p5
         let current
         let dispose
 
-        const icon = new Icon({
+        const icon0 = new Icon({
             props: {
                 style: 'margin-top: 15px;',
                 iconName: /*soundIcon*/ ctx[3],
@@ -2199,7 +2212,37 @@ var app = (function () {
             $$inline: true,
         })
 
-        icon.$on('click', /*click_handler_4*/ ctx[11])
+        icon0.$on('click', /*click_handler_4*/ ctx[11])
+
+        const icon1 = new Icon({
+            props: { iconName: 'shrimp-1' },
+            $$inline: true,
+        })
+
+        const icon2 = new Icon({
+            props: { iconName: 'gold-shrimp-1' },
+            $$inline: true,
+        })
+
+        const icon3 = new Icon({
+            props: { iconName: 'shrimp-pair' },
+            $$inline: true,
+        })
+
+        const icon4 = new Icon({
+            props: { iconName: 'lobster' },
+            $$inline: true,
+        })
+
+        const icon5 = new Icon({
+            props: { iconName: 'mushroom' },
+            $$inline: true,
+        })
+
+        const icon6 = new Icon({
+            props: { iconName: 'gamepad' },
+            $$inline: true,
+        })
 
         const block = {
             c: function create() {
@@ -2225,27 +2268,52 @@ var app = (function () {
                 audio_1 = element('audio')
                 source = element('source')
                 t10 = space()
-                create_component(icon.$$.fragment)
-                attr_dev(button0, 'class', 'svelte-9vx56g')
+                create_component(icon0.$$.fragment)
+                t11 = space()
+                div2 = element('div')
+                create_component(icon1.$$.fragment)
+                p0 = element('p')
+                p0.textContent = '+1 point'
+                t13 = space()
+                create_component(icon2.$$.fragment)
+                p1 = element('p')
+                p1.textContent = '+2 points'
+                t15 = space()
+                create_component(icon3.$$.fragment)
+                p2 = element('p')
+                p2.textContent = '+3 points'
+                t17 = space()
+                create_component(icon4.$$.fragment)
+                p3 = element('p')
+                p3.textContent = '+4 points'
+                t19 = space()
+                create_component(icon5.$$.fragment)
+                p4 = element('p')
+                p4.textContent = '-1 life'
+                t21 = space()
+                create_component(icon6.$$.fragment)
+                p5 = element('p')
+                p5.textContent = '+1 life'
+                attr_dev(button0, 'class', 'svelte-1sev06s')
                 toggle_class(button0, 'active', /*$options*/ ctx[4].gameMap === 'blue')
                 add_location(button0, file$4, 22, 4, 524)
-                attr_dev(button1, 'class', 'svelte-9vx56g')
+                attr_dev(button1, 'class', 'svelte-1sev06s')
                 toggle_class(button1, 'active', /*$options*/ ctx[4].gameMap === 'corals')
                 add_location(button1, file$4, 23, 4, 642)
-                attr_dev(button2, 'class', 'svelte-9vx56g')
+                attr_dev(button2, 'class', 'svelte-1sev06s')
                 toggle_class(button2, 'active', /*$options*/ ctx[4].gameMap === 'jelly')
                 add_location(button2, file$4, 24, 4, 767)
-                attr_dev(div0, 'class', 'tab svelte-9vx56g')
+                attr_dev(div0, 'class', 'tab svelte-1sev06s')
                 add_location(div0, file$4, 21, 0, 502)
                 attr_dev(input, 'type', 'checkbox')
-                attr_dev(input, 'class', 'svelte-9vx56g')
+                attr_dev(input, 'class', 'svelte-1sev06s')
                 add_location(input, file$4, 30, 8, 947)
-                attr_dev(span, 'class', 'slider svelte-9vx56g')
+                attr_dev(span, 'class', 'slider svelte-1sev06s')
                 add_location(span, file$4, 31, 8, 1055)
-                attr_dev(label0, 'class', 'switch svelte-9vx56g')
+                attr_dev(label0, 'class', 'switch svelte-1sev06s')
                 add_location(label0, file$4, 29, 4, 916)
                 add_location(label1, file$4, 33, 4, 1101)
-                attr_dev(div1, 'class', 'toggle svelte-9vx56g')
+                attr_dev(div1, 'class', 'toggle svelte-1sev06s')
                 add_location(div1, file$4, 28, 0, 891)
                 if (source.src !== (source_src_value = '')) attr_dev(source, 'src', source_src_value)
                 attr_dev(source, 'type', '')
@@ -2254,6 +2322,20 @@ var app = (function () {
                 audio_1.autoplay = true
                 audio_1.loop = true
                 add_location(audio_1, file$4, 36, 0, 1166)
+                attr_dev(p0, 'class', 'svelte-1sev06s')
+                add_location(p0, file$4, 43, 32, 1422)
+                attr_dev(p1, 'class', 'svelte-1sev06s')
+                add_location(p1, file$4, 44, 37, 1475)
+                attr_dev(p2, 'class', 'svelte-1sev06s')
+                add_location(p2, file$4, 45, 35, 1527)
+                attr_dev(p3, 'class', 'svelte-1sev06s')
+                add_location(p3, file$4, 46, 31, 1575)
+                attr_dev(p4, 'class', 'svelte-1sev06s')
+                add_location(p4, file$4, 47, 32, 1624)
+                attr_dev(p5, 'class', 'svelte-1sev06s')
+                add_location(p5, file$4, 48, 31, 1670)
+                attr_dev(div2, 'class', 'icon-legend svelte-1sev06s')
+                add_location(div2, file$4, 42, 0, 1364)
             },
             l: function claim(nodes) {
                 throw new Error(
@@ -2282,7 +2364,26 @@ var app = (function () {
                 /*source_binding*/ ctx[9](source)
                 /*audio_1_binding*/ ctx[10](audio_1)
                 insert_dev(target, t10, anchor)
-                mount_component(icon, target, anchor)
+                mount_component(icon0, target, anchor)
+                insert_dev(target, t11, anchor)
+                insert_dev(target, div2, anchor)
+                mount_component(icon1, div2, null)
+                append_dev(div2, p0)
+                append_dev(div2, t13)
+                mount_component(icon2, div2, null)
+                append_dev(div2, p1)
+                append_dev(div2, t15)
+                mount_component(icon3, div2, null)
+                append_dev(div2, p2)
+                append_dev(div2, t17)
+                mount_component(icon4, div2, null)
+                append_dev(div2, p3)
+                append_dev(div2, t19)
+                mount_component(icon5, div2, null)
+                append_dev(div2, p4)
+                append_dev(div2, t21)
+                mount_component(icon6, div2, null)
+                append_dev(div2, p5)
                 current = true
                 if (remount) run_all(dispose)
 
@@ -2316,17 +2417,29 @@ var app = (function () {
                     prop_dev(audio_1, 'muted', /*muted*/ ctx[2])
                 }
 
-                const icon_changes = {}
-                if (dirty & /*soundIcon*/ 8) icon_changes.iconName = /*soundIcon*/ ctx[3]
-                icon.$set(icon_changes)
+                const icon0_changes = {}
+                if (dirty & /*soundIcon*/ 8) icon0_changes.iconName = /*soundIcon*/ ctx[3]
+                icon0.$set(icon0_changes)
             },
             i: function intro(local) {
                 if (current) return
-                transition_in(icon.$$.fragment, local)
+                transition_in(icon0.$$.fragment, local)
+                transition_in(icon1.$$.fragment, local)
+                transition_in(icon2.$$.fragment, local)
+                transition_in(icon3.$$.fragment, local)
+                transition_in(icon4.$$.fragment, local)
+                transition_in(icon5.$$.fragment, local)
+                transition_in(icon6.$$.fragment, local)
                 current = true
             },
             o: function outro(local) {
-                transition_out(icon.$$.fragment, local)
+                transition_out(icon0.$$.fragment, local)
+                transition_out(icon1.$$.fragment, local)
+                transition_out(icon2.$$.fragment, local)
+                transition_out(icon3.$$.fragment, local)
+                transition_out(icon4.$$.fragment, local)
+                transition_out(icon5.$$.fragment, local)
+                transition_out(icon6.$$.fragment, local)
                 current = false
             },
             d: function destroy(detaching) {
@@ -2338,7 +2451,15 @@ var app = (function () {
                 /*source_binding*/ ctx[9](null)
                 /*audio_1_binding*/ ctx[10](null)
                 if (detaching) detach_dev(t10)
-                destroy_component(icon, detaching)
+                destroy_component(icon0, detaching)
+                if (detaching) detach_dev(t11)
+                if (detaching) detach_dev(div2)
+                destroy_component(icon1)
+                destroy_component(icon2)
+                destroy_component(icon3)
+                destroy_component(icon4)
+                destroy_component(icon5)
+                destroy_component(icon6)
                 run_all(dispose)
             },
         }
@@ -2587,21 +2708,21 @@ var app = (function () {
 
                 t6 = space()
                 create_component(options_1.$$.fragment)
-                attr_dev(h1, 'class', 'svelte-1qymvsq')
+                attr_dev(h1, 'class', 'svelte-x330xu')
                 add_location(h1, file$5, 15, 2, 289)
-                attr_dev(div0, 'class', 'title svelte-1qymvsq')
+                attr_dev(div0, 'class', 'title svelte-x330xu')
                 add_location(div0, file$5, 14, 1, 267)
                 set_style(main, 'background-image', "url('./" + /*$options*/ ctx[1].gameMap + ".jpg')")
-                attr_dev(main, 'class', 'svelte-1qymvsq')
+                attr_dev(main, 'class', 'svelte-x330xu')
                 add_location(main, file$5, 18, 1, 322)
-                attr_dev(h2, 'class', 'svelte-1qymvsq')
+                attr_dev(h2, 'class', 'svelte-x330xu')
                 add_location(h2, file$5, 23, 2, 454)
                 set_style(div1, 'display', 'block')
                 set_style(div1, 'margin', '6px')
                 add_location(div1, file$5, 24, 2, 484)
-                attr_dev(div2, 'class', 'control-panel svelte-1qymvsq')
+                attr_dev(div2, 'class', 'control-panel svelte-x330xu')
                 add_location(div2, file$5, 22, 1, 424)
-                attr_dev(div3, 'class', 'container svelte-1qymvsq')
+                attr_dev(div3, 'class', 'container svelte-x330xu')
                 add_location(div3, file$5, 13, 0, 242)
             },
             l: function claim(nodes) {
