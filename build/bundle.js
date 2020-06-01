@@ -437,8 +437,6 @@ var app = (function () {
         }
     }
 
-    const globals = typeof window !== 'undefined' ? window : typeof globalThis !== 'undefined' ? globalThis : global
-
     function bind(component, name, callback) {
         const index = component.$$.props[name]
         if (index !== undefined) {
@@ -637,33 +635,38 @@ var app = (function () {
 
     function get_each_context(ctx, list, i) {
         const child_ctx = ctx.slice()
-        child_ctx[1] = list[i]
-        child_ctx[3] = i
+        child_ctx[2] = list[i]
+        child_ctx[4] = i
         return child_ctx
     }
 
-    // (7:0) {#each shrimpPositions as position, i}
+    // (8:0) {#each shrimpPositions as position, i}
     function create_each_block(ctx) {
         let div
 
         const block = {
             c: function create() {
                 div = element('div')
-                set_style(div, 'left', /*position*/ ctx[1].x + 'px')
-                set_style(div, 'top', /*position*/ ctx[1].y + 'px')
-                attr_dev(div, 'class', 'body svelte-1pwop52')
-                add_location(div, file, 7, 4, 92)
+                set_style(div, 'background-color', /*color*/ ctx[1])
+                set_style(div, 'left', /*position*/ ctx[2].x + 'px')
+                set_style(div, 'top', /*position*/ ctx[2].y + 'px')
+                attr_dev(div, 'class', 'body svelte-ggbnfv')
+                add_location(div, file, 8, 4, 109)
             },
             m: function mount(target, anchor) {
                 insert_dev(target, div, anchor)
             },
             p: function update(ctx, dirty) {
-                if (dirty & /*shrimpPositions*/ 1) {
-                    set_style(div, 'left', /*position*/ ctx[1].x + 'px')
+                if (dirty & /*color*/ 2) {
+                    set_style(div, 'background-color', /*color*/ ctx[1])
                 }
 
                 if (dirty & /*shrimpPositions*/ 1) {
-                    set_style(div, 'top', /*position*/ ctx[1].y + 'px')
+                    set_style(div, 'left', /*position*/ ctx[2].x + 'px')
+                }
+
+                if (dirty & /*shrimpPositions*/ 1) {
+                    set_style(div, 'top', /*position*/ ctx[2].y + 'px')
                 }
             },
             d: function destroy(detaching) {
@@ -675,7 +678,7 @@ var app = (function () {
             block,
             id: create_each_block.name,
             type: 'each',
-            source: '(7:0) {#each shrimpPositions as position, i}',
+            source: '(8:0) {#each shrimpPositions as position, i}',
             ctx,
         })
 
@@ -713,7 +716,7 @@ var app = (function () {
                 insert_dev(target, each_1_anchor, anchor)
             },
             p: function update(ctx, [dirty]) {
-                if (dirty & /*shrimpPositions*/ 1) {
+                if (dirty & /*color, shrimpPositions*/ 3) {
                     each_value = /*shrimpPositions*/ ctx[0]
                     validate_each_argument(each_value)
                     let i
@@ -758,7 +761,8 @@ var app = (function () {
 
     function instance($$self, $$props, $$invalidate) {
         let { shrimpPositions } = $$props
-        const writable_props = ['shrimpPositions']
+        let { color } = $$props
+        const writable_props = ['shrimpPositions', 'color']
 
         Object.keys($$props).forEach((key) => {
             if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$')
@@ -770,25 +774,27 @@ var app = (function () {
 
         $$self.$set = ($$props) => {
             if ('shrimpPositions' in $$props) $$invalidate(0, (shrimpPositions = $$props.shrimpPositions))
+            if ('color' in $$props) $$invalidate(1, (color = $$props.color))
         }
 
-        $$self.$capture_state = () => ({ shrimpPositions })
+        $$self.$capture_state = () => ({ shrimpPositions, color })
 
         $$self.$inject_state = ($$props) => {
             if ('shrimpPositions' in $$props) $$invalidate(0, (shrimpPositions = $$props.shrimpPositions))
+            if ('color' in $$props) $$invalidate(1, (color = $$props.color))
         }
 
         if ($$props && '$$inject' in $$props) {
             $$self.$inject_state($$props.$$inject)
         }
 
-        return [shrimpPositions]
+        return [shrimpPositions, color]
     }
 
     class Shrimp extends SvelteComponentDev {
         constructor(options) {
             super(options)
-            init(this, options, instance, create_fragment, safe_not_equal, { shrimpPositions: 0 })
+            init(this, options, instance, create_fragment, safe_not_equal, { shrimpPositions: 0, color: 1 })
 
             dispatch_dev('SvelteRegisterComponent', {
                 component: this,
@@ -803,6 +809,10 @@ var app = (function () {
             if (/*shrimpPositions*/ ctx[0] === undefined && !('shrimpPositions' in props)) {
                 console.warn("<Shrimp> was created without expected prop 'shrimpPositions'")
             }
+
+            if (/*color*/ ctx[1] === undefined && !('color' in props)) {
+                console.warn("<Shrimp> was created without expected prop 'color'")
+            }
         }
 
         get shrimpPositions() {
@@ -812,6 +822,18 @@ var app = (function () {
         }
 
         set shrimpPositions(value) {
+            throw new Error(
+                "<Shrimp>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'"
+            )
+        }
+
+        get color() {
+            throw new Error(
+                "<Shrimp>: Props cannot be read directly from the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'"
+            )
+        }
+
+        set color(value) {
             throw new Error(
                 "<Shrimp>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'"
             )
@@ -836,7 +858,7 @@ var app = (function () {
                 xlink_attr(use, 'xlink:href', (use_xlink_href_value = './icons-sprite.svg#' + /*iconName*/ ctx[0]))
                 add_location(use, file$1, 7, 4, 150)
                 attr_dev(svg, 'style', /*style*/ ctx[2])
-                attr_dev(svg, 'class', (svg_class_value = 'icon ' + /*cssClass*/ ctx[1] + ' svelte-z92nov'))
+                attr_dev(svg, 'class', (svg_class_value = 'icon ' + /*cssClass*/ ctx[1] + ' svelte-viuxyw'))
                 add_location(svg, file$1, 6, 0, 99)
             },
             l: function claim(nodes) {
@@ -864,7 +886,7 @@ var app = (function () {
 
                 if (
                     dirty & /*cssClass*/ 2 &&
-                    svg_class_value !== (svg_class_value = 'icon ' + /*cssClass*/ ctx[1] + ' svelte-z92nov')
+                    svg_class_value !== (svg_class_value = 'icon ' + /*cssClass*/ ctx[1] + ' svelte-viuxyw')
                 ) {
                     attr_dev(svg, 'class', svg_class_value)
                 }
@@ -1290,7 +1312,7 @@ var app = (function () {
 
     const options = writable({
         advanced: false,
-        gameMap: '3HeadedMonster',
+        gameMap: 'blue',
         music: '',
     })
 
@@ -1329,6 +1351,7 @@ var app = (function () {
         getNewFeedItems,
         isReverse,
         getKeyCodeDirection,
+        removeDuplicatePositions,
     }
 
     function moveShrimp(direction, head) {
@@ -1382,6 +1405,16 @@ var app = (function () {
         }
     }
 
+    function removeDuplicatePositions(positions) {
+        const unique = new Set()
+
+        return positions.filter((p) => {
+            const duplicate = unique.has(`${p.x}:${p.y}`)
+            unique.add(`${p.x}:${p.y}`)
+            return !duplicate
+        })
+    }
+
     function _generateNewPosition() {
         return {
             x: Math.floor(Math.random() * 20) * 50,
@@ -1422,20 +1455,20 @@ var app = (function () {
     var GamePlayUtils_3 = GamePlayUtils.getNewFeedItems
     var GamePlayUtils_4 = GamePlayUtils.isReverse
     var GamePlayUtils_5 = GamePlayUtils.getKeyCodeDirection
+    var GamePlayUtils_6 = GamePlayUtils.removeDuplicatePositions
 
     /* src/svelte/components/GamePlay.svelte generated by Svelte v3.22.3 */
 
-    const { console: console_1 } = globals
-
     const file$3 = 'src/svelte/components/GamePlay.svelte'
 
-    // (136:4) {#if gameRunning}
+    // (173:4) {#if gameRunning}
     function create_if_block_2(ctx) {
         let t
         let current
 
         const shrimp = new Shrimp({
             props: {
+                color: /*color*/ ctx[7],
                 shrimpPositions: /*shrimpPositions*/ ctx[3],
             },
             $$inline: true,
@@ -1460,6 +1493,7 @@ var app = (function () {
             },
             p: function update(ctx, dirty) {
                 const shrimp_changes = {}
+                if (dirty & /*color*/ 128) shrimp_changes.color = /*color*/ ctx[7]
                 if (dirty & /*shrimpPositions*/ 8) shrimp_changes.shrimpPositions = /*shrimpPositions*/ ctx[3]
                 shrimp.$set(shrimp_changes)
                 const feeditems_changes = {}
@@ -1488,14 +1522,14 @@ var app = (function () {
             block,
             id: create_if_block_2.name,
             type: 'if',
-            source: '(136:4) {#if gameRunning}',
+            source: '(173:4) {#if gameRunning}',
             ctx,
         })
 
         return block
     }
 
-    // (147:27)
+    // (184:27)
     function create_if_block_1(ctx) {
         let p
         let p_transition
@@ -1504,9 +1538,9 @@ var app = (function () {
         const block = {
             c: function create() {
                 p = element('p')
-                p.textContent = 'Press any arrow key to begin playing.'
-                attr_dev(p, 'class', 'svelte-vbtg08')
-                add_location(p, file$3, 147, 8, 4462)
+                p.textContent = 'Press any arrow key to start playing.'
+                attr_dev(p, 'class', 'svelte-okwzuz')
+                add_location(p, file$3, 184, 8, 5392)
             },
             m: function mount(target, anchor) {
                 insert_dev(target, p, anchor)
@@ -1538,14 +1572,14 @@ var app = (function () {
             block,
             id: create_if_block_1.name,
             type: 'if',
-            source: '(147:27) ',
+            source: '(184:27) ',
             ctx,
         })
 
         return block
     }
 
-    // (140:4) {#if gameOver}
+    // (177:4) {#if gameOver}
     function create_if_block(ctx) {
         let div
         let p0
@@ -1568,13 +1602,13 @@ var app = (function () {
             $$inline: true,
         })
 
-        icon.$on('click', /*startGame*/ ctx[5])
+        icon.$on('click', /*startGame*/ ctx[8])
 
         const block = {
             c: function create() {
                 div = element('div')
                 p0 = element('p')
-                p0.textContent = 'Game Over!'
+                p0.textContent = 'Game Over Loser!'
                 t1 = space()
                 p1 = element('p')
                 t2 = text('Score: ')
@@ -1585,13 +1619,13 @@ var app = (function () {
                 t6 = text(t6_value)
                 t7 = space()
                 create_component(icon.$$.fragment)
-                attr_dev(p0, 'class', 'svelte-vbtg08')
-                add_location(p0, file$3, 141, 12, 4236)
-                attr_dev(p1, 'class', 'svelte-vbtg08')
-                add_location(p1, file$3, 142, 12, 4266)
-                attr_dev(p2, 'class', 'svelte-vbtg08')
-                add_location(p2, file$3, 143, 12, 4305)
-                add_location(div, file$3, 140, 8, 4172)
+                attr_dev(p0, 'class', 'svelte-okwzuz')
+                add_location(p0, file$3, 178, 12, 5160)
+                attr_dev(p1, 'class', 'svelte-okwzuz')
+                add_location(p1, file$3, 179, 12, 5196)
+                attr_dev(p2, 'class', 'svelte-okwzuz')
+                add_location(p2, file$3, 180, 12, 5235)
+                add_location(div, file$3, 177, 8, 5096)
             },
             m: function mount(target, anchor) {
                 insert_dev(target, div, anchor)
@@ -1644,7 +1678,7 @@ var app = (function () {
             block,
             id: create_if_block.name,
             type: 'if',
-            source: '(140:4) {#if gameOver}',
+            source: '(177:4) {#if gameOver}',
             ctx,
         })
 
@@ -1653,9 +1687,13 @@ var app = (function () {
 
     function create_fragment$3(ctx) {
         let div
-        let t
+        let t0
         let current_block_type_index
         let if_block1
+        let t1
+        let audio_1
+        let source
+        let source_src_value
         let current
         let dispose
         let if_block0 = /*gameRunning*/ ctx[2] && create_if_block_2(ctx)
@@ -1676,10 +1714,17 @@ var app = (function () {
             c: function create() {
                 div = element('div')
                 if (if_block0) if_block0.c()
-                t = space()
+                t0 = space()
                 if (if_block1) if_block1.c()
+                t1 = space()
+                audio_1 = element('audio')
+                source = element('source')
                 attr_dev(div, 'class', 'game-play')
-                add_location(div, file$3, 134, 0, 4019)
+                add_location(div, file$3, 171, 0, 4935)
+                if (source.src !== (source_src_value = '')) attr_dev(source, 'src', source_src_value)
+                attr_dev(source, 'type', '')
+                add_location(source, file$3, 188, 4, 5500)
+                add_location(audio_1, file$3, 187, 0, 5470)
             },
             l: function claim(nodes) {
                 throw new Error(
@@ -1689,15 +1734,20 @@ var app = (function () {
             m: function mount(target, anchor, remount) {
                 insert_dev(target, div, anchor)
                 if (if_block0) if_block0.m(div, null)
-                append_dev(div, t)
+                append_dev(div, t0)
 
                 if (~current_block_type_index) {
                     if_blocks[current_block_type_index].m(div, null)
                 }
 
+                insert_dev(target, t1, anchor)
+                insert_dev(target, audio_1, anchor)
+                append_dev(audio_1, source)
+                /*source_binding*/ ctx[20](source)
+                /*audio_1_binding*/ ctx[21](audio_1)
                 current = true
                 if (remount) dispose()
-                dispose = listen_dev(window, 'keydown', /*onKeyDown*/ ctx[6], false, false, false)
+                dispose = listen_dev(window, 'keydown', /*onKeyDown*/ ctx[9], false, false, false)
             },
             p: function update(ctx, [dirty]) {
                 if (/*gameRunning*/ ctx[2]) {
@@ -1711,7 +1761,7 @@ var app = (function () {
                         if_block0 = create_if_block_2(ctx)
                         if_block0.c()
                         transition_in(if_block0, 1)
-                        if_block0.m(div, t)
+                        if_block0.m(div, t0)
                     }
                 } else if (if_block0) {
                     group_outros()
@@ -1777,6 +1827,10 @@ var app = (function () {
                     if_blocks[current_block_type_index].d()
                 }
 
+                if (detaching) detach_dev(t1)
+                if (detaching) detach_dev(audio_1)
+                /*source_binding*/ ctx[20](null)
+                /*audio_1_binding*/ ctx[21](null)
                 dispose()
             },
         }
@@ -1795,7 +1849,7 @@ var app = (function () {
     function instance$3($$self, $$props, $$invalidate) {
         let $options
         validate_store(options, 'options')
-        component_subscribe($$self, options, ($$value) => $$invalidate(10, ($options = $$value)))
+        component_subscribe($$self, options, ($$value) => $$invalidate(14, ($options = $$value)))
         let gameOver = false
         let gameRunning = false
         let intervalId
@@ -1806,7 +1860,20 @@ var app = (function () {
         ]
         let direction = ''
         let feedItems
+        let audio
+        let audioSource
+        let sound = ''
         let { stat } = $$props
+
+        afterUpdate(() => {
+            if (sound) {
+                $$invalidate(6, (audioSource.src = `./${sound}`), audioSource)
+                $$invalidate(6, (audioSource.type = `audio/${sound.split('.')[1]}`), audioSource)
+                audio.load()
+                audio.play()
+                sound = ''
+            }
+        })
 
         function startGame() {
             initialState()
@@ -1822,17 +1889,16 @@ var app = (function () {
                 $$invalidate(3, (shrimpPositions = [newHead, ...shrimpPositions]))
 
                 if (isGameOver()) {
+                    set_store_value(options, ($options.music = 'theEnd.mp3'), $options)
                     return
                 }
 
                 feedItems.forEach((feed, idx) => {
                     if (GamePlayUtils_2(newHead, feed)) {
-                        console.log('FEEDITEMS111', JSON.stringify(feedItems))
-                        const consumedFeed = feedItems.splice(idx, 1, ...generateNewFeedItems())[0]
-                        $$invalidate(4, feedItems)
-                        console.log('FEEDITEMS', JSON.stringify(feedItems))
-                        $$invalidate(0, (stat.score = stat.score + (consumedFeed.score || 0) + 15), stat)
-                        $$invalidate(0, (stat.lives = stat.lives + (consumedFeed.life || 0)), stat)
+                        const consumedFeed = feedItems.splice(idx, 1)[0]
+                        $$invalidate(4, (feedItems = updateFeedItems()))
+                        setSound(consumedFeed)
+                        updateStat(consumedFeed)
 
                         if (stat.score > 15 && $options.music !== 'terror.mp3') {
                             set_store_value(options, ($options.music = 'terror.mp3'), $options)
@@ -1844,16 +1910,35 @@ var app = (function () {
             }, interval)
         }
 
-        function generateNewFeedItems() {
+        function updateStat(consumedFeed) {
+            $$invalidate(0, (stat.score = stat.score + (consumedFeed.score || 0)), stat)
+            $$invalidate(0, (stat.lives = stat.lives + (consumedFeed.life || 0)), stat)
+        }
+
+        function setSound(consumedFeed) {
+            if (consumedFeed.score > 0) {
+                sound = 'pointsAdded.wav'
+            } else if (consumedFeed.life > 0) {
+                sound = 'healthAdded.wav'
+            } else if (consumedFeed.life < 0) {
+                sound = 'healthLost.wav'
+            }
+        }
+
+        function updateFeedItems() {
+            if (feedItems.filter((f) => f.score !== -1).length > 8) {
+                return []
+            }
+
             let newFeeds = []
 
             const availableStats = feedItems.reduce(
                 (acc, item) => {
                     acc.score += item.score || 0
-                    acc.lives += item.life || 0
+                    acc.healers += item.life === 1 ? 1 : 0
                     return acc
                 },
-                { score: 0, lives: 0 }
+                { score: 0, healers: 0 }
             )
 
             if (stat.score <= 5) {
@@ -1864,16 +1949,17 @@ var app = (function () {
                 newFeeds = GamePlayUtils_3(3, 3)
 
                 if (stat.lives >= 2) {
+                    // add poison mushroom
                     newFeeds.push(GamePlayUtils_3(1, 4)[0])
                 }
 
-                if (stat.lives < 3) {
+                if (stat.lives < 3 && availableStats.healers < 3 - stat.lives) {
+                    // add healer
                     newFeeds.push(GamePlayUtils_3(1, 5)[0])
                 }
             }
 
-            console.log('AVStat', stat, JSON.stringify(availableStats), newFeeds)
-            return newFeeds
+            return GamePlayUtils_6([...feedItems, ...newFeeds])
         }
 
         function isGameOver() {
@@ -1881,13 +1967,13 @@ var app = (function () {
 
             if (
                 head.x < 0 ||
-                head.x >= 970 ||
+                head.x > 975 ||
                 head.y < 0 ||
-                head.y >= 690 ||
+                head.y > 675 ||
                 shrimpPositions.slice(1).find((s) => GamePlayUtils_2(s, head)) ||
                 stat.lives === 0
             ) {
-                set_store_value(options, ($options.music = 'theEnd.mp3'), $options)
+                sound = 'dead.wav'
                 $$invalidate(1, (gameOver = true))
                 return true
             }
@@ -1910,6 +1996,7 @@ var app = (function () {
             $$invalidate(2, (gameRunning = true))
             $$invalidate(1, (gameOver = false))
             set_store_value(options, ($options.music = 'theBeginning.mp3'), $options)
+            sound = ''
             $$invalidate(0, (stat = { score: 0, lives: 3 }))
             direction = 'right'
             $$invalidate(
@@ -1927,11 +2014,23 @@ var app = (function () {
 
         Object.keys($$props).forEach((key) => {
             if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$')
-                console_1.warn(`<GamePlay> was created with unknown prop '${key}'`)
+                console.warn(`<GamePlay> was created with unknown prop '${key}'`)
         })
 
         let { $$slots = {}, $$scope } = $$props
         validate_slots('GamePlay', $$slots, [])
+
+        function source_binding($$value) {
+            binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+                $$invalidate(6, (audioSource = $$value))
+            })
+        }
+
+        function audio_1_binding($$value) {
+            binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+                $$invalidate(5, (audio = $$value))
+            })
+        }
 
         $$self.$set = ($$props) => {
             if ('stat' in $$props) $$invalidate(0, (stat = $$props.stat))
@@ -1943,26 +2042,34 @@ var app = (function () {
             options,
             fade,
             fly,
+            afterUpdate,
             Icon,
             moveShrimp: GamePlayUtils_1,
             collision: GamePlayUtils_2,
             getNewFeedItems: GamePlayUtils_3,
             isReverse: GamePlayUtils_4,
             getKeyCodeDirection: GamePlayUtils_5,
+            removeDuplicatePositions: GamePlayUtils_6,
             gameOver,
             gameRunning,
             intervalId,
             shrimpPositions,
             direction,
             feedItems,
+            audio,
+            audioSource,
+            sound,
             stat,
             startGame,
-            generateNewFeedItems,
+            updateStat,
+            setSound,
+            updateFeedItems,
             isGameOver,
             onKeyDown,
             initialState,
             interval,
             $options,
+            color,
         })
 
         $$self.$inject_state = ($$props) => {
@@ -1972,23 +2079,55 @@ var app = (function () {
             if ('shrimpPositions' in $$props) $$invalidate(3, (shrimpPositions = $$props.shrimpPositions))
             if ('direction' in $$props) direction = $$props.direction
             if ('feedItems' in $$props) $$invalidate(4, (feedItems = $$props.feedItems))
+            if ('audio' in $$props) $$invalidate(5, (audio = $$props.audio))
+            if ('audioSource' in $$props) $$invalidate(6, (audioSource = $$props.audioSource))
+            if ('sound' in $$props) sound = $$props.sound
             if ('stat' in $$props) $$invalidate(0, (stat = $$props.stat))
             if ('interval' in $$props) interval = $$props.interval
+            if ('color' in $$props) $$invalidate(7, (color = $$props.color))
         }
 
         let interval
+        let color
 
         if ($$props && '$$inject' in $$props) {
             $$self.$inject_state($$props.$$inject)
         }
 
         $$self.$$.update = () => {
-            if ($$self.$$.dirty & /*$options*/ 1024) {
+            if ($$self.$$.dirty & /*$options*/ 16384) {
                 interval = $options.advanced ? 80 : 180
+            }
+
+            if ($$self.$$.dirty & /*stat*/ 1) {
+                $$invalidate(7, (color = stat.lives < 3 ? '#f78a86' : '#86bbf7'))
             }
         }
 
-        return [stat, gameOver, gameRunning, shrimpPositions, feedItems, startGame, onKeyDown]
+        return [
+            stat,
+            gameOver,
+            gameRunning,
+            shrimpPositions,
+            feedItems,
+            audio,
+            audioSource,
+            color,
+            startGame,
+            onKeyDown,
+            intervalId,
+            direction,
+            sound,
+            interval,
+            $options,
+            updateStat,
+            setSound,
+            updateFeedItems,
+            isGameOver,
+            initialState,
+            source_binding,
+            audio_1_binding,
+        ]
     }
 
     class GamePlay extends SvelteComponentDev {
@@ -2007,7 +2146,7 @@ var app = (function () {
             const props = options.props || {}
 
             if (/*stat*/ ctx[0] === undefined && !('stat' in props)) {
-                console_1.warn("<GamePlay> was created without expected prop 'stat'")
+                console.warn("<GamePlay> was created without expected prop 'stat'")
             }
         }
 
@@ -2069,7 +2208,7 @@ var app = (function () {
                 button0.textContent = 'Koro Sea'
                 t1 = space()
                 button1 = element('button')
-                button1.textContent = 'Coral Sea'
+                button1.textContent = 'iQuatic Sea'
                 t3 = space()
                 button2 = element('button')
                 button2.textContent = 'Red Sea'
@@ -2087,34 +2226,34 @@ var app = (function () {
                 source = element('source')
                 t10 = space()
                 create_component(icon.$$.fragment)
-                attr_dev(button0, 'class', 'svelte-zlvs8e')
-                toggle_class(button0, 'active', /*$options*/ ctx[4].gameMap === '3HeadedMonster')
+                attr_dev(button0, 'class', 'svelte-9vx56g')
+                toggle_class(button0, 'active', /*$options*/ ctx[4].gameMap === 'blue')
                 add_location(button0, file$4, 22, 4, 524)
-                attr_dev(button1, 'class', 'svelte-zlvs8e')
+                attr_dev(button1, 'class', 'svelte-9vx56g')
                 toggle_class(button1, 'active', /*$options*/ ctx[4].gameMap === 'corals')
-                add_location(button1, file$4, 23, 4, 662)
-                attr_dev(button2, 'class', 'svelte-zlvs8e')
-                toggle_class(button2, 'active', /*$options*/ ctx[4].gameMap === 'giantMonster')
-                add_location(button2, file$4, 24, 4, 785)
-                attr_dev(div0, 'class', 'tab svelte-zlvs8e')
+                add_location(button1, file$4, 23, 4, 642)
+                attr_dev(button2, 'class', 'svelte-9vx56g')
+                toggle_class(button2, 'active', /*$options*/ ctx[4].gameMap === 'jelly')
+                add_location(button2, file$4, 24, 4, 767)
+                attr_dev(div0, 'class', 'tab svelte-9vx56g')
                 add_location(div0, file$4, 21, 0, 502)
                 attr_dev(input, 'type', 'checkbox')
-                attr_dev(input, 'class', 'svelte-zlvs8e')
-                add_location(input, file$4, 30, 8, 979)
-                attr_dev(span, 'class', 'slider svelte-zlvs8e')
-                add_location(span, file$4, 31, 8, 1087)
-                attr_dev(label0, 'class', 'switch svelte-zlvs8e')
-                add_location(label0, file$4, 29, 4, 948)
-                add_location(label1, file$4, 33, 4, 1133)
-                attr_dev(div1, 'class', 'toggle svelte-zlvs8e')
-                add_location(div1, file$4, 28, 0, 923)
+                attr_dev(input, 'class', 'svelte-9vx56g')
+                add_location(input, file$4, 30, 8, 947)
+                attr_dev(span, 'class', 'slider svelte-9vx56g')
+                add_location(span, file$4, 31, 8, 1055)
+                attr_dev(label0, 'class', 'switch svelte-9vx56g')
+                add_location(label0, file$4, 29, 4, 916)
+                add_location(label1, file$4, 33, 4, 1101)
+                attr_dev(div1, 'class', 'toggle svelte-9vx56g')
+                add_location(div1, file$4, 28, 0, 891)
                 if (source.src !== (source_src_value = '')) attr_dev(source, 'src', source_src_value)
                 attr_dev(source, 'type', '')
-                add_location(source, file$4, 37, 4, 1250)
+                add_location(source, file$4, 37, 4, 1218)
                 audio_1.muted = /*muted*/ ctx[2]
                 audio_1.autoplay = true
                 audio_1.loop = true
-                add_location(audio_1, file$4, 36, 0, 1198)
+                add_location(audio_1, file$4, 36, 0, 1166)
             },
             l: function claim(nodes) {
                 throw new Error(
@@ -2156,7 +2295,7 @@ var app = (function () {
             },
             p: function update(ctx, [dirty]) {
                 if (dirty & /*$options*/ 16) {
-                    toggle_class(button0, 'active', /*$options*/ ctx[4].gameMap === '3HeadedMonster')
+                    toggle_class(button0, 'active', /*$options*/ ctx[4].gameMap === 'blue')
                 }
 
                 if (dirty & /*$options*/ 16) {
@@ -2164,7 +2303,7 @@ var app = (function () {
                 }
 
                 if (dirty & /*$options*/ 16) {
-                    toggle_class(button2, 'active', /*$options*/ ctx[4].gameMap === 'giantMonster')
+                    toggle_class(button2, 'active', /*$options*/ ctx[4].gameMap === 'jelly')
                 }
 
                 if (
@@ -2241,9 +2380,9 @@ var app = (function () {
 
         let { $$slots = {}, $$scope } = $$props
         validate_slots('Options', $$slots, [])
-        const click_handler = () => set_store_value(options, ($options.gameMap = '3HeadedMonster'), $options)
+        const click_handler = () => set_store_value(options, ($options.gameMap = 'blue'), $options)
         const click_handler_1 = () => set_store_value(options, ($options.gameMap = 'corals'), $options)
-        const click_handler_2 = () => set_store_value(options, ($options.gameMap = 'giantMonster'), $options)
+        const click_handler_2 = () => set_store_value(options, ($options.gameMap = 'jelly'), $options)
 
         const click_handler_3 = () =>
             set_store_value(
@@ -2337,7 +2476,7 @@ var app = (function () {
         return child_ctx
     }
 
-    // (31:2) {#each Array(stat.lives) as i}
+    // (26:2) {#each Array(stat.lives) as i}
     function create_each_block$2(ctx) {
         let current
 
@@ -2373,7 +2512,7 @@ var app = (function () {
             block,
             id: create_each_block$2.name,
             type: 'each',
-            source: '(31:2) {#each Array(stat.lives) as i}',
+            source: '(26:2) {#each Array(stat.lives) as i}',
             ctx,
         })
 
@@ -2381,19 +2520,20 @@ var app = (function () {
     }
 
     function create_fragment$5(ctx) {
-        let div2
+        let div3
+        let div0
         let h1
         let t1
         let main
         let updating_stat
         let t2
-        let div1
+        let div2
         let h2
         let t3
         let t4_value = /*stat*/ ctx[0].score + ''
         let t4
         let t5
-        let div0
+        let div1
         let t6
         let current
 
@@ -2426,19 +2566,20 @@ var app = (function () {
 
         const block = {
             c: function create() {
-                div2 = element('div')
+                div3 = element('div')
+                div0 = element('div')
                 h1 = element('h1')
                 h1.textContent = 'Hungry Shrimp'
                 t1 = space()
                 main = element('main')
                 create_component(gameplay.$$.fragment)
                 t2 = space()
-                div1 = element('div')
+                div2 = element('div')
                 h2 = element('h2')
                 t3 = text('Score ')
                 t4 = text(t4_value)
                 t5 = space()
-                div0 = element('div')
+                div1 = element('div')
 
                 for (let i = 0; i < each_blocks.length; i += 1) {
                     each_blocks[i].c()
@@ -2446,20 +2587,22 @@ var app = (function () {
 
                 t6 = space()
                 create_component(options_1.$$.fragment)
-                attr_dev(h1, 'class', 'svelte-hz2rr')
-                add_location(h1, file$5, 21, 1, 365)
+                attr_dev(h1, 'class', 'svelte-1qymvsq')
+                add_location(h1, file$5, 15, 2, 289)
+                attr_dev(div0, 'class', 'title svelte-1qymvsq')
+                add_location(div0, file$5, 14, 1, 267)
                 set_style(main, 'background-image', "url('./" + /*$options*/ ctx[1].gameMap + ".jpg')")
-                attr_dev(main, 'class', 'svelte-hz2rr')
-                add_location(main, file$5, 23, 1, 390)
-                attr_dev(h2, 'class', 'svelte-hz2rr')
-                add_location(h2, file$5, 28, 2, 522)
-                set_style(div0, 'display', 'block')
-                set_style(div0, 'margin', '6px')
-                add_location(div0, file$5, 29, 2, 552)
-                attr_dev(div1, 'class', 'control-panel svelte-hz2rr')
-                add_location(div1, file$5, 27, 1, 492)
-                attr_dev(div2, 'class', 'container svelte-hz2rr')
-                add_location(div2, file$5, 20, 0, 340)
+                attr_dev(main, 'class', 'svelte-1qymvsq')
+                add_location(main, file$5, 18, 1, 322)
+                attr_dev(h2, 'class', 'svelte-1qymvsq')
+                add_location(h2, file$5, 23, 2, 454)
+                set_style(div1, 'display', 'block')
+                set_style(div1, 'margin', '6px')
+                add_location(div1, file$5, 24, 2, 484)
+                attr_dev(div2, 'class', 'control-panel svelte-1qymvsq')
+                add_location(div2, file$5, 22, 1, 424)
+                attr_dev(div3, 'class', 'container svelte-1qymvsq')
+                add_location(div3, file$5, 13, 0, 242)
             },
             l: function claim(nodes) {
                 throw new Error(
@@ -2467,25 +2610,26 @@ var app = (function () {
                 )
             },
             m: function mount(target, anchor) {
-                insert_dev(target, div2, anchor)
-                append_dev(div2, h1)
-                append_dev(div2, t1)
-                append_dev(div2, main)
+                insert_dev(target, div3, anchor)
+                append_dev(div3, div0)
+                append_dev(div0, h1)
+                append_dev(div3, t1)
+                append_dev(div3, main)
                 mount_component(gameplay, main, null)
-                append_dev(div2, t2)
-                append_dev(div2, div1)
-                append_dev(div1, h2)
+                append_dev(div3, t2)
+                append_dev(div3, div2)
+                append_dev(div2, h2)
                 append_dev(h2, t3)
                 append_dev(h2, t4)
-                append_dev(div1, t5)
-                append_dev(div1, div0)
+                append_dev(div2, t5)
+                append_dev(div2, div1)
 
                 for (let i = 0; i < each_blocks.length; i += 1) {
-                    each_blocks[i].m(div0, null)
+                    each_blocks[i].m(div1, null)
                 }
 
-                append_dev(div1, t6)
-                mount_component(options_1, div1, null)
+                append_dev(div2, t6)
+                mount_component(options_1, div2, null)
                 current = true
             },
             p: function update(ctx, [dirty]) {
@@ -2521,7 +2665,7 @@ var app = (function () {
                             each_blocks[i] = create_each_block$2(child_ctx)
                             each_blocks[i].c()
                             transition_in(each_blocks[i], 1)
-                            each_blocks[i].m(div0, null)
+                            each_blocks[i].m(div1, null)
                         }
                     }
 
@@ -2557,7 +2701,7 @@ var app = (function () {
                 current = false
             },
             d: function destroy(detaching) {
-                if (detaching) detach_dev(div2)
+                if (detaching) detach_dev(div3)
                 destroy_component(gameplay)
                 destroy_each(each_blocks, detaching)
                 destroy_component(options_1)
