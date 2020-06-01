@@ -35,7 +35,7 @@
 <style>
 	.container {
 		height: 100%;
-		overflow: hidden;
+		/* overflow: hidden; */
 		text-align: center;
 	}
 

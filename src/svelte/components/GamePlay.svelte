@@ -142,6 +142,7 @@
     }
 
     function onKeyDown(event) {
+        event.preventDefault()
         const newDirection = getKeyCodeDirection(event.keyCode)
         if (newDirection && !isReverse(direction, newDirection)) {
             direction = newDirection
