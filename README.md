@@ -1,5 +1,5 @@
 # Hungry Shrimp
-Shrimp head eating monster...
+ Shrimp head eating monster. Based on the classic snake game.
 
 1. yarn install
 2. yarn dev
